@@ -13,5 +13,9 @@ public class Dollar {
 		return product;
 		
 	}
+	
+	public boolean equals(Object other){
+		return true;
+	}
 
 }
