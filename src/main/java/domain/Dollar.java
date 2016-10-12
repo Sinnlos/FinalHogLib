@@ -11,7 +11,4 @@ public class Dollar extends Money{
 		return product;
 		
 	}
-
-	
-
 }

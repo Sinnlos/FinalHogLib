@@ -1,10 +1,24 @@
 package domain;
 
-public class Money {
+public abstract class Money {
+	
 	protected int amount;
 	
 	public boolean equals(Object other){
 		Money money = (Money)other;
-		return money.amount==this.amount;
+		return money.amount == this.amount 
+				&& getClass().equals(other.getClass());
 	}
+
+	public static Money dollar(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Money franc(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public abstract Money times(int multiplier);
 }
