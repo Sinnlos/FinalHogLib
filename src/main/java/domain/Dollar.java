@@ -2,7 +2,7 @@ package domain;
 
 public class Dollar {
 
-	public int amount;
+	public  int amount;
 
 	public Dollar(int amount) {
 		this.amount = amount;
@@ -15,7 +15,12 @@ public class Dollar {
 	}
 	
 	public boolean equals(Object other){
-		return true;
+		if(this == other){
+			return true;
+		}
+		return false;
 	}
+
+	
 
 }
