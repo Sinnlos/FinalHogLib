@@ -46,7 +46,7 @@ public class MoneyTest {
 		
 	}
 	
-	/*@Test
+	@Test
 	public void testSimpleAddition(){
 		Money five = Money.dollar(5);
 		
@@ -58,5 +58,5 @@ public class MoneyTest {
 		
 		assertEquals(result,  Money.dollar(10));
 	}
-*/
+
 }
