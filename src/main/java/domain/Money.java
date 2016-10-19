@@ -1,6 +1,6 @@
 package domain;
 
-public class Money {
+public class Money implements Expression {
 	
 	protected int amount;
 	protected String currency;
@@ -28,8 +28,8 @@ public class Money {
 		return new Money(this.amount*multiplier, currency);
 	}
 	
-	public Money plus(Money money){
-		return new Money(this.amount + money.amount , currency);
+	public Expression plus(Money money){
+		return new Sum(this, money);
 	}
 	
 	public  String currency(){
