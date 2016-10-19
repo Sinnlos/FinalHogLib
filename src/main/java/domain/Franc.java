@@ -10,7 +10,7 @@ public class Franc extends Money {
 		return new Franc(this.amount*multiplier);
 	}
 	public String currency() {
-		return "CHD";
+		return "CHF";
 	}
 	
 	
