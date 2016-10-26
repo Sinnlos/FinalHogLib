@@ -18,7 +18,7 @@ public class Sum implements Expression {
 	}
 
 	public Expression plus(Expression expression) {
-		return new Sum(this, expression);
+		return null;
 	}
 
 }
