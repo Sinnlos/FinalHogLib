@@ -18,8 +18,9 @@ public class Bank {
 	}
 
 	public int rate(String currency, String to) {
-		
-		return 0;
+		if(currency == to)
+			return 1;
+		return (Integer) rates.get(new Pair(currency,to));
 	}
 
 	
