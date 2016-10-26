@@ -2,6 +2,29 @@ package domain;
 
 import java.util.Hashtable;
 
+
+public class Bank {
+	
+	Hashtable rates = new Hashtable();
+
+	public Money reduce(Expression expression, String currency) {
+		
+		return expression.reduce(this, currency);
+		
+	}
+
+	public void addRate(String currencyFrom, String currencyTo, int rate) {
+		rates.put(new Pair(currencyFrom,currencyTo),new Integer(rate));
+	}
+
+	public int rate(String currency, String to) {
+		
+		return 0;
+	}
+
+	
+}
+
 class Pair {
 	public String currencyFrom;
 	public String currencyTo;
@@ -30,22 +53,4 @@ class Pair {
 		return 0;
 	}
 	
-}
-
-public class Bank {
-	
-	Hashtable currencyRateTable = new Hashtable();
-
-	public Money reduce(Expression expression, String currency) {
-		
-		return expression.reduce(currency);
-		
-	}
-
-	public void addRate(String currencyFrom, String currencyTo, int rate) {
-		
-		currencyRateTable.put(new Pair(currencyFrom,currencyTo), rate);
-		
-	}
-
 }
