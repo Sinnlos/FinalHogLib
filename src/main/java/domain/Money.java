@@ -37,7 +37,35 @@ public class Money implements Expression {
 		
 	}
 
-	public Money reduce(String currency) {
-		return this;
+	public Money reduce(Bank bank, String to) {
+		int rate = bank.rate(this.currency, to);
+		return new Money(amount/rate, to);
 	};
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
