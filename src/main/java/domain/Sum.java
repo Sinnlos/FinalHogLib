@@ -21,4 +21,11 @@ public class Sum implements Expression {
 		return new Sum(this, expression);
 	}
 
+	public Expression times(int multi) {
+		return new Sum(
+				this.augend.times(multi),
+				this.addend.times(multi)
+				);
+	}
+
 }
