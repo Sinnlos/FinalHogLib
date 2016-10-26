@@ -8,4 +8,9 @@ public class Bank {
 		
 	}
 
+	public void addRate(String currencyFrom, String currencyTo, int rate) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
