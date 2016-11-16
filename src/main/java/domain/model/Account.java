@@ -5,7 +5,13 @@ import java.util.List;
 public class Account {
 	
 	private int id;
-	private Person person;
+	private int personId;
+	public int getPersonId() {
+		return personId;
+	}
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
 	private double amount;
 	private String currency;
 	private List<HistoryLog> history;
@@ -17,12 +23,7 @@ public class Account {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Person getPerson() {
-		return person;
-	}
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+	
 	public double getAmount() {
 		return amount;
 	}
