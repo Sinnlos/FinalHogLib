@@ -23,9 +23,11 @@ public class PersonRepository {
 	
 	private String insertSql = "INSERT INTO person(name,surname) VALUES(?,?)";
 	private String deleteSql = "DELETE FROM Person WHERE id = ?";
+	private String updateSql = "UPDATE PERSON set name=?, surname=? WHERE id=?";
 	
 	private PreparedStatement insert;
 	private PreparedStatement delete;
+	private PreparedStatement update;
 
 	
 	
@@ -48,6 +50,7 @@ public class PersonRepository {
 			
 			insert = connection.prepareStatement(insertSql);
 			delete = connection.prepareStatement(deleteSql);	
+			update = connection.prepareStatement(updateSql);	
 			
 			
 		} catch (SQLException e) {
@@ -71,6 +74,19 @@ public class PersonRepository {
 			insert.setString(1, p.getName());
 			insert.setString(2, p.getSurname());
 			insert.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	public void update(Person p){
+		try{
+			
+			update.setString(1, p.getName());
+			update.setString(2, p.getSurname());
+			update.executeUpdate();
 			
 		}catch(SQLException ex){
 			ex.printStackTrace();
