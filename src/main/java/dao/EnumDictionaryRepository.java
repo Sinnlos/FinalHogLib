@@ -1,9 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import domain.model.EnumDictionary;
+import domain.model.Person;
 
 public class EnumDictionaryRepository {
 
@@ -17,6 +21,17 @@ private Connection connection;
 			+ "enumName VARCHAR(50),"
 			+ ")";
 	private Statement createTable;
+	
+	
+	private String insertSql = "INSERT INTO enumDictionary(intKey,stringKey,value,enumName) VALUES(?,?,?,?)";
+	private String deleteSql = "DELETE FROM enumDictionary WHERE id = ?";
+	private String updateSql = "UPDATE FROM enumDictionary WHERE id = ?";
+	
+	private PreparedStatement insert;
+	private PreparedStatement delete;
+	private PreparedStatement update;
+	
+	
 	
 	public EnumDictionaryRepository(Connection connection) {
 		this.connection = connection;
@@ -34,15 +49,53 @@ private Connection connection;
 			}
 			if(!tableExists)
 				createTable.executeUpdate(createTableSql);
-				
 			
-			
+			insert = connection.prepareStatement(insertSql);
+			delete = connection.prepareStatement(deleteSql);
+			update = connection.prepareStatement(updateSql);
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	public void delete(EnumDictionary ed){
+		try{
+			delete.setInt(1, ed.getId());
+			delete.executeUpdate();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
 	
+	public void add(EnumDictionary ed){
+		try{
+			
+			insert.setLong(1, ed.getIntKey());
+			insert.setString(2, ed.getStringKey());
+			insert.setString(3, ed.getValue());
+			insert.setString(4, ed.getEnumName());
+			insert.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
 	
+	}
+	
+	public void update(EnumDictionary ed){
+		try{
+			
+			update.setLong(1, ed.getIntKey());
+			update.setString(2,  ed.getStringKey());
+			update.setString(3, ed.getValue());
+			update.setString(4, ed.getEnumName());
+			update.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		
+	}
 	
 }
