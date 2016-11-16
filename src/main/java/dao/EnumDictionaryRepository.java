@@ -1,9 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import domain.model.EnumDictionary;
+import domain.model.Person;
 
 public class EnumDictionaryRepository {
 
@@ -17,6 +21,13 @@ private Connection connection;
 			+ "enumName VARCHAR(50),"
 			+ ")";
 	private Statement createTable;
+	
+	private String insertSql = "INSERT INTO EnumDictionary(intKey,stringKey,value,enumName) VALUES(?,?,?,?)";
+	private String deleteSql = "DELETE FROM EnumDictionary WHERE id = ?";
+	
+	private PreparedStatement insert;
+	private PreparedStatement delete;
+	private PreparedStatement update;
 	
 	public EnumDictionaryRepository(Connection connection) {
 		this.connection = connection;
@@ -41,7 +52,40 @@ private Connection connection;
 			e.printStackTrace();
 		}
 	}
-	
+		public void delete(EnumDictionary e){
+			try{
+				delete.setInt(1, e.getId());
+				delete.executeUpdate();
+			}catch(SQLException ex){
+				ex.printStackTrace();
+			}
+		}
+		
+		public void add(EnumDictionary e){
+			try{
+				
+				insert.setLong(1, e.getIntKey());
+				insert.setString(2, e.getStringKey());
+				insert.setString(2, e.getValue());
+				insert.setString(2, e.getEnumName());
+				insert.executeUpdate();
+				
+			}catch(SQLException ex){
+				ex.printStackTrace();
+			}
+	}
+		public void update(EnumDictionary e){
+			try {
+				update.setLong(1, e.getIntKey());
+				update.setString(2, e.getStringKey());
+				update.setString(2, e.getValue());
+				update.setString(2, e.getEnumName());
+				update.executeUpdate();
+				
+			}catch(SQLException ex){
+				ex.printStackTrace();
+			}
+		}
 	
 	
 	
