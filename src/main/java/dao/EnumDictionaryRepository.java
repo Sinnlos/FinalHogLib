@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.model.EnumDictionary;
 import domain.model.Person;
@@ -26,12 +28,16 @@ private Connection connection;
 	private String insertSql = "INSERT INTO enumDictionary(intKey,stringKey,value,enumName) VALUES(?,?,?,?)";
 	private String deleteSql = "DELETE FROM enumDictionary WHERE id = ?";
 	private String updateSql = "UPDATE FROM enumDictionary WHERE id = ?";
+	private String selectByIdSql = "SELECT * FROM enumDictionary WHERE id=?";
+	private String selectAllSql = "SELECT * FROM enumDictionary";
 	
 	private PreparedStatement insert;
 	private PreparedStatement delete;
 	private PreparedStatement update;
+	private PreparedStatement selectById;
+	private PreparedStatement selectAll;
 	
-	public EnumDictionaryRepository(Connection connection) {
+	public EnumDictionaryRepository() {
 		this.connection = connection;
 		
 		try {
@@ -51,6 +57,8 @@ private Connection connection;
 			insert = connection.prepareStatement(insertSql);
 			delete = connection.prepareStatement(deleteSql);
 			update = connection.prepareStatement(updateSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			selectAll = connection.prepareStatement(selectAllSql);
 	
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,6 +74,51 @@ private Connection connection;
 		}
 	}
 	
+	public EnumDictionary get(int enumDictionaryId){
+		try{
+			
+			selectById.setInt(1, enumDictionaryId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				EnumDictionary result = new EnumDictionary();
+				result.setId(rs.getInt("id"));
+				result.setIntKey(rs.getInt("Int Key"));
+				result.setStringKey(rs.getString("String Key"));
+				result.setValue(rs.getString("Value"));
+				result.setEnumName(rs.getString("Enum Name"));
+				return result;
+			}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+	public List<EnumDictionary> getAll(){
+		try{
+			List<EnumDictionary> result = new ArrayList<EnumDictionary>();
+			ResultSet rs = selectAll.executeQuery();
+			while(rs.next()){
+				EnumDictionary ed = new EnumDictionary();
+				ed.setId(rs.getInt("id"));
+				ed.setIntKey(rs.getInt("int Key"));
+				ed.setStringKey(rs.getString("String Key"));
+				ed.setValue(rs.getString("value"));
+				ed.setEnumName(rs.getString("Enum Name"));
+				result.add(ed);
+			}
+			return result;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+
 	public void add(EnumDictionary ed){
 		try{
 			
