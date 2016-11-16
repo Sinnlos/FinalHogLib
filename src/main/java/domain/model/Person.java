@@ -1,28 +1,11 @@
 package domain.model;
 
-import java.util.Date;
+import java.util.List;
 
 public class Person {
-	
-	private String pesel;
 
-	public String getPesel() {
-		return pesel;
-	}
-
-	public void setPesel(String pesel) {
-		this.pesel = pesel;
-	}
-	
-	//public Date getDayOfBirth(){}
-	
-	//public int getAge(){}
-	//public Gender getGender(){}
-	
-	//public boolean checkPesel(){}
-	
+	private String name;
+	private String surname;
+	private List<Account> accounts;
 }
 
-enum Gender{
-	Male, Female
-}
