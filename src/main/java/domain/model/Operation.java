@@ -2,5 +2,6 @@ package domain.model;
 
 public enum Operation {
 
-	INCOME, OUTCOME
+	INCOME, OUTCOME;
+	
 }

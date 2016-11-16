@@ -13,6 +13,7 @@ public class HistoryLog {
 	private Account to;
 	private double rate;
 	private Operation type;
+	private int id;
 	
 	
 	public Account getAccount() {
@@ -62,6 +63,12 @@ public class HistoryLog {
 	}
 	public void setRate(double rate) {
 		this.rate = rate;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	};
 	
 	
