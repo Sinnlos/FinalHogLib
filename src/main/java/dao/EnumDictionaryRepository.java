@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.model.EnumDictionary;
 import domain.model.Person;
@@ -22,14 +24,20 @@ private Connection connection;
 			+ ")";
 	private Statement createTable;
 	
-	private String insertSql = "INSERT INTO EnumDictionary(intKey,stringKey,value,enumName) VALUES(?,?,?,?)";
-	private String deleteSql = "DELETE FROM EnumDictionary WHERE id = ?";
+	
+	private String insertSql = "INSERT INTO enumDictionary(intKey,stringKey,value,enumName) VALUES(?,?,?,?)";
+	private String deleteSql = "DELETE FROM enumDictionary WHERE id = ?";
+	private String updateSql = "UPDATE FROM enumDictionary WHERE id = ?";
+	private String selectByIdSql = "SELECT * FROM enumDictionary WHERE id=?";
+	private String selectAllSql = "SELECT * FROM enumDictionary";
 	
 	private PreparedStatement insert;
 	private PreparedStatement delete;
 	private PreparedStatement update;
+	private PreparedStatement selectById;
+	private PreparedStatement selectAll;
 	
-	public EnumDictionaryRepository(Connection connection) {
+	public EnumDictionaryRepository() {
 		this.connection = connection;
 		
 		try {
@@ -44,49 +52,101 @@ private Connection connection;
 				}
 			}
 			if(!tableExists)
-				createTable.executeUpdate(createTableSql);
 				
-			
-			
+			createTable.executeUpdate(createTableSql);	
+			insert = connection.prepareStatement(insertSql);
+			delete = connection.prepareStatement(deleteSql);
+			update = connection.prepareStatement(updateSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			selectAll = connection.prepareStatement(selectAllSql);
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-		public void delete(EnumDictionary e){
-			try{
-				delete.setInt(1, e.getId());
-				delete.executeUpdate();
-			}catch(SQLException ex){
-				ex.printStackTrace();
+	
+	public void delete(EnumDictionary ed){
+		try{
+			delete.setInt(1, ed.getId());
+			delete.executeUpdate();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public EnumDictionary get(int enumDictionaryId){
+		try{
+			
+			selectById.setInt(1, enumDictionaryId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				EnumDictionary result = new EnumDictionary();
+				result.setId(rs.getInt("id"));
+				result.setIntKey(rs.getInt("Int Key"));
+				result.setStringKey(rs.getString("String Key"));
+				result.setValue(rs.getString("Value"));
+				result.setEnumName(rs.getString("Enum Name"));
+				return result;
 			}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+
+
+	public List<EnumDictionary> getAll(){
+		try{
+			List<EnumDictionary> result = new ArrayList<EnumDictionary>();
+			ResultSet rs = selectAll.executeQuery();
+			while(rs.next()){
+				EnumDictionary ed = new EnumDictionary();
+				ed.setId(rs.getInt("id"));
+				ed.setIntKey(rs.getInt("int Key"));
+				ed.setStringKey(rs.getString("String Key"));
+				ed.setValue(rs.getString("value"));
+				ed.setEnumName(rs.getString("Enum Name"));
+				result.add(ed);
+			}
+			return result;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+
+	public void add(EnumDictionary ed){
+		try{
+			
+			insert.setLong(1, ed.getIntKey());
+			insert.setString(2, ed.getStringKey());
+			insert.setString(3, ed.getValue());
+			insert.setString(4, ed.getEnumName());
+			insert.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	
+	}
+	
+	public void update(EnumDictionary ed){
+		try{
+			
+			update.setLong(1, ed.getIntKey());
+			update.setString(2,  ed.getStringKey());
+			update.setString(3, ed.getValue());
+			update.setString(4, ed.getEnumName());
+			update.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
 		}
 		
-		public void add(EnumDictionary e){
-			try{
-				
-				insert.setLong(1, e.getIntKey());
-				insert.setString(2, e.getStringKey());
-				insert.setString(2, e.getValue());
-				insert.setString(2, e.getEnumName());
-				insert.executeUpdate();
-				
-			}catch(SQLException ex){
-				ex.printStackTrace();
-			}
 	}
-		public void update(EnumDictionary e){
-			try {
-				update.setLong(1, e.getIntKey());
-				update.setString(2, e.getStringKey());
-				update.setString(2, e.getValue());
-				update.setString(2, e.getEnumName());
-				update.executeUpdate();
-				
-			}catch(SQLException ex){
-				ex.printStackTrace();
-			}
-		}
-	
-	
 	
 }
