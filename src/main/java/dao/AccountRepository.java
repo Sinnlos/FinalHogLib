@@ -1,9 +1,15 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.model.Account;
+import domain.model.Person;
 
 public class AccountRepository {
 	
@@ -16,6 +22,13 @@ private Connection connection;
 			+ "currency VARCHAR(20),"
 			+ ")";
 	private Statement createTable;
+	
+
+	private String selectByIdSql = "SELECT * FROM account WHERE id=?";
+	private String selectAllSql = "SELECT * FROM account";
+	
+	private PreparedStatement selectById;
+	private PreparedStatement selectAll;
 	
 	public AccountRepository(Connection connection) {
 		this.connection = connection;
@@ -33,11 +46,53 @@ private Connection connection;
 			}
 			if(!tableExists)
 				createTable.executeUpdate(createTableSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			selectAll = connection.prepareStatement(selectAllSql);
 				
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Account get(int accountId){
+		try{
+			
+			selectById.setInt(1, accountId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				Account result = new Account();
+				result.setId(rs.getInt("id"));
+				result.setPersonId(rs.getInt("person_id"));
+				result.setAmount(rs.getDouble("amount"));
+				result.setCurrency(rs.getString("currency"));
+				return result;
+			}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Account> getAll(){
+		try{
+			List<Account> result = new ArrayList<Account>();
+			ResultSet rs = selectAll.executeQuery();
+			while(rs.next()){
+				Account a = new Account();
+				a.setId(rs.getInt("id"));
+				a.setPersonId(rs.getInt("person_id"));
+				a.setAmount(rs.getDouble("amount"));
+				a.setCurrency(rs.getString("currency"));
+				result.add(a);
+			}
+			return result;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 
 }
