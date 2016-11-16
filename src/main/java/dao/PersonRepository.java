@@ -45,7 +45,6 @@ public class PersonRepository {
 			}
 			if(!tableExists)
 				createTable.executeUpdate(createTableSql);
-			
 			insert = connection.prepareStatement(insertSql);
 			delete = connection.prepareStatement(deleteSql);	
 			
@@ -77,6 +76,7 @@ public class PersonRepository {
 		}
 		
 	}
+	
 	
 	
 	

@@ -48,8 +48,8 @@ private Connection connection;
 				}
 			}
 			if(!tableExists)
-				createTable.executeUpdate(createTableSql);
-			
+				
+			createTable.executeUpdate(createTableSql);	
 			insert = connection.prepareStatement(insertSql);
 			delete = connection.prepareStatement(deleteSql);
 			update = connection.prepareStatement(updateSql);
