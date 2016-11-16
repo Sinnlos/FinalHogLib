@@ -1,6 +1,7 @@
 package domain.model;
 
-import sun.util.calendar.BaseCalendar.Date;
+import java.util.Date;
+
 
 public class HistoryLog {
 
@@ -9,8 +10,13 @@ public class HistoryLog {
 	private Account from;
 	private Account to;
 	private double rate;
-	private enum type{
-		income, outcome;
+	private Operation type;
+	
+	public Operation getType() {
+		return type;
+	}
+	public void setType(Operation type) {
+		this.type = type;
 	}
 	public Date getDate() {
 		return date;
