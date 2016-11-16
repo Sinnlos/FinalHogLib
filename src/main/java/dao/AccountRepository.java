@@ -35,7 +35,6 @@ private Connection connection;
 				createTable.executeUpdate(createTableSql);
 				
 			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
