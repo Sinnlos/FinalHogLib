@@ -15,15 +15,8 @@ public class Account {
 	private double amount;
 	private String currency;
 	private List<HistoryLog> history;
-	private int id;
 	
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	
 	public double getAmount() {
 		return amount;
