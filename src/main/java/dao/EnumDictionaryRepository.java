@@ -31,8 +31,6 @@ private Connection connection;
 	private PreparedStatement delete;
 	private PreparedStatement update;
 	
-	
-	
 	public EnumDictionaryRepository(Connection connection) {
 		this.connection = connection;
 		
