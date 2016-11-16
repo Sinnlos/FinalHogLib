@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import dao.PersonRepository;
+import dao.HistoryLogRepository;
 
 public class App 
 {
@@ -15,6 +16,7 @@ public class App
 			Connection connection = DriverManager.getConnection(url);
 			
 			PersonRepository repo = new PersonRepository(connection);
+			HistoryLogRepository repo1 = new HistoryLogRepository(connection);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
