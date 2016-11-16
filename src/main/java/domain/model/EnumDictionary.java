@@ -1,5 +1,10 @@
 package domain.model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class EnumDictionary {
 
 	private int id;
@@ -39,5 +44,9 @@ public class EnumDictionary {
 		this.enumName = enumName;
 	}
 	
-	
 }
+
+	
+	
+
+
