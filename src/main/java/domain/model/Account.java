@@ -7,6 +7,7 @@ public class Account {
 	private double amount;
 	private String currency;
 	private List<HistoryLog> history;
+	private int id;
 	
 	public Person getPerson() {
 		return person;
@@ -31,6 +32,12 @@ public class Account {
 	}
 	public void setHistory(List<HistoryLog> history) {
 		this.history = history;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

@@ -1,9 +1,13 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import domain.model.HistoryLog;
+import domain.model.Person;
 
 public class HistoryLogRepository {
 	
@@ -21,7 +25,11 @@ public class HistoryLogRepository {
 	
 	private Statement createTable;
 
-
+	private String insertSql = "INSERT INTO historyLog(date,amount,accountfrom,accountto,rate,operation) VALUES(?,?,?,?,?,?)";
+	private String deleteSql = "DELETE FROM historyLog WHERE id = ?";
+	
+	private PreparedStatement insert;
+	private PreparedStatement delete;
 	
 	public HistoryLogRepository(Connection connection) {
 		this.connection = connection;
@@ -47,6 +55,30 @@ public class HistoryLogRepository {
 		}
 	}
 	
+	public void delete(HistoryLog p){
+		try{
+			delete.setInt(1, p.getId());
+			delete.executeUpdate();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
 	
+	public void add(HistoryLog p){
+		try{
+			
+			insert.setString(1, p.getDate().toString());
+			insert.setDouble(2, p.getAmount());
+			insert.setInt(3, p.getFrom().getId());
+			insert.setInt(4, p.getTo().getId());
+			insert.setDouble(5, p.getRate());
+			insert.setInt(6, p.getType().ordinal());
+			insert.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		
+	}
 	
 }
