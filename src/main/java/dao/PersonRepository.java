@@ -86,6 +86,7 @@ public class PersonRepository {
 			
 			update.setString(1, p.getName());
 			update.setString(2, p.getSurname());
+			update.setInt(3, p.getId());
 			update.executeUpdate();
 			
 		}catch(SQLException ex){
