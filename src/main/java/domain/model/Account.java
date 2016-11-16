@@ -3,11 +3,20 @@ package domain.model;
 import java.util.List;
 
 public class Account {
+	
+	private int id;
 	private Person person;
 	private double amount;
 	private String currency;
 	private List<HistoryLog> history;
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Person getPerson() {
 		return person;
 	}

@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class HistoryLog {
 
+	private int id;
+	private Account account;
 	private Date date;
 	private double amount;
 	private Account from;
@@ -12,6 +14,19 @@ public class HistoryLog {
 	private double rate;
 	private Operation type;
 	
+	
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Operation getType() {
 		return type;
 	}

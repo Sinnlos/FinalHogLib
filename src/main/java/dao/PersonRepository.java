@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import domain.model.Person;
 
@@ -24,12 +26,14 @@ public class PersonRepository {
 	private String insertSql = "INSERT INTO person(name,surname) VALUES(?,?)";
 	private String deleteSql = "DELETE FROM Person WHERE id = ?";
 	private String updateSql = "UPDATE PERSON set name=?, surname=? WHERE id=?";
+	private String selectByIdSql = "SELECT * FROM person WHERE id=?";
+	private String selectAllSql = "SELECT * FROM person";
 	
 	private PreparedStatement insert;
 	private PreparedStatement delete;
 	private PreparedStatement update;
-
-	
+	private PreparedStatement selectById;
+	private PreparedStatement selectAll;
 	
 	public PersonRepository(Connection connection) {
 		this.connection = connection;
@@ -50,7 +54,9 @@ public class PersonRepository {
 			
 			insert = connection.prepareStatement(insertSql);
 			delete = connection.prepareStatement(deleteSql);	
-			update = connection.prepareStatement(updateSql);	
+			update = connection.prepareStatement(updateSql);
+			selectById = connection.prepareStatement(selectByIdSql);
+			selectAll = connection.prepareStatement(selectAllSql);
 			
 			
 		} catch (SQLException e) {
@@ -58,7 +64,44 @@ public class PersonRepository {
 		}
 	}
 
+	public Person get(int personId){
+		try{
+			
+			selectById.setInt(1, personId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				Person result = new Person();
+				result.setId(personId);
+				result.setName(rs.getString("name"));
+				result.setSurname(rs.getString("surname"));
+				return result;
+			}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
+	public List<Person> getAll(){
+		try{
+			List<Person> result = new ArrayList<Person>();
+			ResultSet rs = selectAll.executeQuery();
+			while(rs.next()){
+				Person p = new Person();
+				p.setId(rs.getInt("id"));
+				p.setName(rs.getString("name"));
+				p.setSurname(rs.getString("surname"));
+				result.add(p);
+			}
+			return result;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void delete(Person p){
 		try{
 			delete.setInt(1, p.getId());
