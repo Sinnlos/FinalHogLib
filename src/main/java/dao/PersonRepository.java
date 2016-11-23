@@ -1,59 +1,17 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.Person;
 
 public abstract class PersonRepository extends RepositoryBase<Person> {
 	
-	public PersonRepository(Connection connection) {
-		super(connection);
+	public PersonRepository(Connection connection, IMapResultSetIntoEntity<Person> mapper) {
+		super(connection, mapper);
 	}
 
-	public Person get(int personId){
-		try{
-			
-			selectById.setInt(1, personId);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				Person result = new Person();
-				result.setId(personId);
-				result.setName(rs.getString("name"));
-				result.setSurname(rs.getString("surname"));
-				return result;
-			}
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
-	}
-
-	public List<Person> getAll(){
-		try{
-			List<Person> result = new ArrayList<Person>();
-			ResultSet rs = selectAll.executeQuery();
-			while(rs.next()){
-				Person p = new Person();
-				p.setId(rs.getInt("id"));
-				p.setName(rs.getString("name"));
-				p.setSurname(rs.getString("surname"));
-				result.add(p);
-			}
-			return result;
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
-	}
-	
 	@Override
 	protected String tableName() {
 		return "person";
@@ -74,24 +32,10 @@ public abstract class PersonRepository extends RepositoryBase<Person> {
 	}
 
 	@Override
-	protected String deleteSql() {
-		return "DELETE FROM Person WHERE id = ?";
-	}
-
-	@Override
 	protected String updateSql() {
 		return "UPDATE PERSON set name=?, surname=? WHERE id=?";
 	}
 
-	@Override
-	protected String selectByIdSql() {
-		return "SELECT * FROM person WHERE id=?";
-	}
-
-	@Override
-	protected String selectAllSql() {
-		return "SELECT * FROM person";
-	}
 
 	@Override
 	protected void setupInsert(Person entity) throws SQLException {

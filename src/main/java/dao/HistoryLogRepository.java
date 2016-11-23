@@ -53,14 +53,6 @@ public class HistoryLogRepository extends RepositoryBase<HistoryLog> {
 		return null;
 	}
 	
-	public void delete(HistoryLog p){
-		try{
-			delete.setInt(1, p.getId());
-			delete.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
 	
 	@Override
 	protected String tableName() {

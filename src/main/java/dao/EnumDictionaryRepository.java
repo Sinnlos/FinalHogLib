@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.model.Account;
 import domain.model.EnumDictionary;
 
 public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
@@ -121,5 +122,8 @@ public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 		update.setString(3, entity.getValue());
 		update.setString(4, entity.getEnumName());		
 	}
-	
+
+
 }
+	
+
