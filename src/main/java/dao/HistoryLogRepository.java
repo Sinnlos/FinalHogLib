@@ -27,9 +27,15 @@ public class HistoryLogRepository {
 
 	private String insertSql = "INSERT INTO historyLog(date,amount,accountfrom,accountto,rate,operation) VALUES(?,?,?,?,?,?)";
 	private String deleteSql = "DELETE FROM historyLog WHERE id = ?";
+	private String updateSql = "UPDATE historyLog set date=?, amount=?, accountfrom=?, accountto=?, rate=?, operation=? WHERE id=?";
+	private String selectByIdSql = "SELECT * FROM historyLog WHERE id=?";
+	private String selectAllSql = "SELECT * FROM historyLog";
 	
 	private PreparedStatement insert;
 	private PreparedStatement delete;
+	private PreparedStatement update;
+	private PreparedStatement selectById;
+	private PreparedStatement selectAll;
 	
 	public HistoryLogRepository(Connection connection) {
 		this.connection = connection;
@@ -38,7 +44,7 @@ public class HistoryLogRepository {
 			createTable = connection.createStatement();
 			
 			boolean tableExists = false;
-			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
+			ResultSet rs = connection.getMetaData().getTables(null, null, null, null, null, null, null, null);
 			while(rs.next()){
 				if(rs.getString("TABLE_NAME").equalsIgnoreCase("historylog")){
 					tableExists=true;
@@ -53,6 +59,30 @@ public class HistoryLogRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public HistoryLog get(int historyLogId){
+		try{
+			
+			selectById.setInt(1, historyLogId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				HistoryLog result = new HistoryLog();
+				result.setId(historyLogId);
+				result.setAccount();
+				result.setDate();
+				result.setAmount(rs.getDouble("amount"));
+				result.setFrom();
+				result.setTo();
+				result.setRate();
+				result.setType();
+				return result;
+			}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	
 	public void delete(HistoryLog p){
@@ -74,6 +104,23 @@ public class HistoryLogRepository {
 			insert.setDouble(5, p.getRate());
 			insert.setInt(6, p.getType().ordinal());
 			insert.executeUpdate();
+			
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	public void update(HistoryLog p){
+		try{
+			
+			update.setString(1, p.getDate().toString());
+			update.setDouble(2, p.getAmount());
+			update.setInt(3, p.getFrom().getId());
+			update.setInt(4, p.getTo().getId());
+			update.setDouble(5, p.getRate());
+			update.setInt(6, p.getType().ordinal());
+			update.executeUpdate();
 			
 		}catch(SQLException ex){
 			ex.printStackTrace();
