@@ -8,6 +8,14 @@ import dao.AccountRepository;
 import dao.EnumDictionaryRepository;
 import dao.PersonRepository;
 import dao.HistoryLogRepository;
+import dao.mappers.AccountMapper;
+import dao.mappers.EnumDirectoryMapper;
+import dao.mappers.HistoryLogMapper;
+import dao.mappers.IMapResultSetIntoEntity;
+import dao.mappers.PersonMapper;
+import domain.model.Account;
+import domain.model.EnumDictionary;
+import domain.model.HistoryLog;
 import domain.model.Person;
 
 public class App 
@@ -17,10 +25,15 @@ public class App
     	String url = "jdbc:hsqldb:hsql://localhost/workdb";
     	try {
 			Connection connection = DriverManager.getConnection(url);
-			PersonRepository repo = new PersonRepository(connection);
-			HistoryLogRepository repo1 = new HistoryLogRepository(connection);
-			AccountRepository accountRepo = new AccountRepository(connection);
-			//EnumDictionaryRepository enumRepo = new EnumDictionaryRepository(connection);
+			IMapResultSetIntoEntity<Person> personMapper = new PersonMapper();
+			IMapResultSetIntoEntity<HistoryLog> historyMapper = new HistoryLogMapper();
+			IMapResultSetIntoEntity<EnumDictionary> enumsMapper = new EnumDirectoryMapper();
+			IMapResultSetIntoEntity<Account> accountMapper = new AccountMapper();
+			
+			PersonRepository repo = new PersonRepository(connection, personMapper);
+			HistoryLogRepository repo1 = new HistoryLogRepository(connection, historyMapper);
+			AccountRepository accountRepo = new AccountRepository(connection,accountMapper);
+			EnumDictionaryRepository enumRepo = new EnumDictionaryRepository(connection,enumsMapper);
 			
 			Person janek = new Person();
 			janek.setName("Jan");

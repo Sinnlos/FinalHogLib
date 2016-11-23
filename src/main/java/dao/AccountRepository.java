@@ -3,14 +3,18 @@ package dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import dao.mappers.IMapResultSetIntoEntity;
+import dao.mappers.AccountMapper;
 import domain.model.Account;
+import domain.model.Person;
 
-public abstract class AccountRepository extends RepositoryBase<Account> {
+public class AccountRepository extends RepositoryBase<Account> {
 	
-	public AccountRepository(Connection connection, IMapResultSetIntoEntity<Account> mapper) {
- super(connection, mapper);
-}
+	public AccountRepository(Connection connection, 
+			AccountMapper mapper,
+			IRepository<Person> personRepo) {
+		super(connection, mapper);
+		mapper.setPersonRepo(personRepo);	
+	}
 	
 	@Override
 	protected String tableName() {

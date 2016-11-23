@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import domain.model.EnumDictionary;
 
-public class EnumDirectoryMapper implements IMapResultSetIntoEntity {
+public class EnumDirectoryMapper implements IMapResultSetIntoEntity<EnumDictionary> {
 
 	public EnumDictionary map(ResultSet rs) throws SQLException {
 		EnumDictionary result = new EnumDictionary();

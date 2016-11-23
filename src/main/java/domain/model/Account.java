@@ -6,6 +6,15 @@ public class Account implements IHaveId{
 	
 	private int id;
 	private int personId;
+	private Person person;
+	
+	
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 	public int getPersonId() {
 		return personId;
 	}
