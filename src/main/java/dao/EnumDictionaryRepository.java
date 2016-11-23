@@ -1,69 +1,19 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import domain.model.Account;
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.EnumDictionary;
 
 public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 
 	
 	
-	public EnumDictionaryRepository(Connection connection) {
-		super(connection);
+	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper) {
+		super(connection, mapper);
 	}
 	
-	
-	
-	public EnumDictionary get(int enumDictionaryId){
-		try{
-			
-			selectById.setInt(1, enumDictionaryId);
-			ResultSet rs = selectById.executeQuery();
-			while(rs.next()){
-				EnumDictionary result = new EnumDictionary();
-				result.setId(rs.getInt("id"));
-				result.setIntKey(rs.getInt("Int Key"));
-				result.setStringKey(rs.getString("String Key"));
-				result.setValue(rs.getString("Value"));
-				result.setEnumName(rs.getString("Enum Name"));
-				return result;
-			}
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
-	}
-
-
-
-	public List<EnumDictionary> getAll(){
-		try{
-			List<EnumDictionary> result = new ArrayList<EnumDictionary>();
-			ResultSet rs = selectAll.executeQuery();
-			while(rs.next()){
-				EnumDictionary ed = new EnumDictionary();
-				ed.setId(rs.getInt("id"));
-				ed.setIntKey(rs.getInt("int Key"));
-				ed.setStringKey(rs.getString("String Key"));
-				ed.setValue(rs.getString("value"));
-				ed.setEnumName(rs.getString("Enum Name"));
-				result.add(ed);
-			}
-			return result;
-		}
-		catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		return null;
-	}
-	
-
 	
 
 	@Override
@@ -87,25 +37,13 @@ public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 		return "INSERT INTO enumDictionary(intKey,stringKey,value,enumName) VALUES(?,?,?,?)";
 	}
 
-	@Override
-	protected String deleteSql() {
-		return "DELETE FROM enumDictionary WHERE id = ?";
-	}
 
 	@Override
 	protected String updateSql() {
-		return "UPDATE FROM enumDictionary WHERE id = ?";
+		return "UPDATE enumDictionary set intKey=?,stringKey=?,value=?,enumName=? WHERE id = ?";
 	}
 
-	@Override
-	protected String selectByIdSql() {
-		return "SELECT * FROM enumDictionary WHERE id=?";
-	}
 
-	@Override
-	protected String selectAllSql() {
-		return "SELECT * FROM enumDictionary";
-	}
 
 	@Override
 	protected void setupInsert(EnumDictionary entity) throws SQLException {
