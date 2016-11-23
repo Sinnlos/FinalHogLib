@@ -105,7 +105,7 @@ public class EnumDictionaryRepository extends RepositoryBase {
 
 	@Override
 	protected String tableName() {
-		return "enumDictionary)";
+		return "enumDictionary";
 	}
 
 	@Override
