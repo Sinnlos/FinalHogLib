@@ -20,7 +20,7 @@ public class App
 			PersonRepository repo = new PersonRepository(connection);
 			HistoryLogRepository repo1 = new HistoryLogRepository(connection);
 			AccountRepository accountRepo = new AccountRepository(connection);
-			EnumDictionaryRepository enumRepo = new EnumDictionaryRepository(connection);
+			//EnumDictionaryRepository enumRepo = new EnumDictionaryRepository(connection);
 			
 			Person janek = new Person();
 			janek.setName("Jan");

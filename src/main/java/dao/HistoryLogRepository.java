@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import domain.model.HistoryLog;
 import domain.model.Person;
 
@@ -44,7 +43,7 @@ public class HistoryLogRepository {
 			createTable = connection.createStatement();
 			
 			boolean tableExists = false;
-			ResultSet rs = connection.getMetaData().getTables(null, null, null, null, null, null, null, null);
+			ResultSet rs = connection.getMetaData().getTables(null, null, null, null);
 			while(rs.next()){
 				if(rs.getString("TABLE_NAME").equalsIgnoreCase("historylog")){
 					tableExists=true;
@@ -69,13 +68,7 @@ public class HistoryLogRepository {
 			while(rs.next()){
 				HistoryLog result = new HistoryLog();
 				result.setId(historyLogId);
-				result.setAccount();
-				result.setDate();
 				result.setAmount(rs.getDouble("amount"));
-				result.setFrom();
-				result.setTo();
-				result.setRate();
-				result.setType();
 				return result;
 			}
 		}
