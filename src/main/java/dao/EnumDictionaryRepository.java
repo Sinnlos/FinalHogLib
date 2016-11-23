@@ -72,29 +72,7 @@ public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 	}
 	
 
-	public void add(EnumDictionary ed){
-		try{
-			
-			
-			insert.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
 	
-	}
-	
-	public void update(EnumDictionary ed){
-		try{
-			
-			
-			update.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		
-	}
 
 	@Override
 	protected String tableName() {
