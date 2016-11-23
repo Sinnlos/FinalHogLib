@@ -23,10 +23,15 @@ private Connection connection;
 			+ ")";
 	private Statement createTable;
 	
-
+	private String insertSql = "INSERT INTO account(person_id, amount, currency) VALUES (?, ?, ?)";
+	private String deleteSql = "DELETE FROM account WHERE ID = ?";
+	private String updateSql = "UPDATE account SET person_id = ?, amount = ?, currency = ? WHERE ID = ?"; 
 	private String selectByIdSql = "SELECT * FROM account WHERE id=?";
 	private String selectAllSql = "SELECT * FROM account";
 	
+	private PreparedStatement insert;
+	private PreparedStatement delete;
+	private PreparedStatement update;
 	private PreparedStatement selectById;
 	private PreparedStatement selectAll;
 	
@@ -46,6 +51,9 @@ private Connection connection;
 			}
 			if(!tableExists)
 				createTable.executeUpdate(createTableSql);
+			insert = connection.prepareStatement(insertSql);
+			delete = connection.prepareStatement(deleteSql);	
+			update = connection.prepareStatement(updateSql);
 			selectById = connection.prepareStatement(selectByIdSql);
 			selectAll = connection.prepareStatement(selectAllSql);
 				
@@ -94,5 +102,35 @@ private Connection connection;
 		}
 		return null;
 	}
-
+	
+	public void delete(Account a){
+		try{
+			delete.setInt(1, a.getId());
+			delete.executeUpdate();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public void add(Account a){
+		try{
+			insert.setString(1, a.getCurrency());
+			insert.setDouble(2, a.getAmount());
+			insert.setInt(3, a.getPersonId());
+			insert.executeUpdate();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	public void update(Account a){
+		try{
+			update.setString(1, a.getCurrency());
+			update.setDouble(2, a.getAmount());
+			update.setInt(3, a.getPersonId());
+			update.executeUpdate();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
+	}
 }
