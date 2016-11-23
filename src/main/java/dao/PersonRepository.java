@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.Person;
 
-public abstract class PersonRepository extends RepositoryBase<Person> {
+public class PersonRepository extends RepositoryBase<Person> {
 	
 	public PersonRepository(Connection connection, IMapResultSetIntoEntity<Person> mapper) {
 		super(connection, mapper);

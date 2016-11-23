@@ -11,7 +11,7 @@ import java.util.List;
 import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.IHaveId;
 
-public abstract class RepositoryBase<TEntity extends IHaveId> {
+public abstract class RepositoryBase<TEntity extends IHaveId> implements IRepository<TEntity> {
 
 
 	protected Connection connection;
@@ -44,6 +44,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 			e.printStackTrace();
 		}
 	}
+	/* (non-Javadoc)
+	 * @see dao.IRepository#get(int)
+	 */
 	public TEntity get(int personId){
 		try{
 			
@@ -59,6 +62,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see dao.IRepository#getAll()
+	 */
 	public List<TEntity> getAll(){
 		try{
 			List<TEntity> result = new ArrayList<TEntity>();
@@ -74,6 +80,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see dao.IRepository#add(TEntity)
+	 */
 	public void add(TEntity entity){
 		try{
 			setupInsert(entity);
@@ -83,6 +92,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		}
 		
 	}
+	/* (non-Javadoc)
+	 * @see dao.IRepository#update(TEntity)
+	 */
 	public void update(TEntity entity){
 		try{
 			setupUpdate(entity);
@@ -94,6 +106,9 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see dao.IRepository#delete(TEntity)
+	 */
 	public void delete(TEntity entity){
 		try{
 			delete.setInt(1, entity.getId());
