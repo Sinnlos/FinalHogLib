@@ -1,17 +1,15 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.model.Account;
 import domain.model.EnumDictionary;
-import domain.model.Person;
 
-public class EnumDictionaryRepository extends RepositoryBase {
+public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 
 	
 	
@@ -19,14 +17,7 @@ public class EnumDictionaryRepository extends RepositoryBase {
 		super(connection);
 	}
 	
-	public void delete(EnumDictionary ed){
-		try{
-			delete.setInt(1, ed.getId());
-			delete.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
+	
 	
 	public EnumDictionary get(int enumDictionaryId){
 		try{
@@ -73,35 +64,7 @@ public class EnumDictionaryRepository extends RepositoryBase {
 	}
 	
 
-	public void add(EnumDictionary ed){
-		try{
-			
-			insert.setLong(1, ed.getIntKey());
-			insert.setString(2, ed.getStringKey());
-			insert.setString(3, ed.getValue());
-			insert.setString(4, ed.getEnumName());
-			insert.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
 	
-	}
-	
-	public void update(EnumDictionary ed){
-		try{
-			
-			update.setLong(1, ed.getIntKey());
-			update.setString(2,  ed.getStringKey());
-			update.setString(3, ed.getValue());
-			update.setString(4, ed.getEnumName());
-			update.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		
-	}
 
 	@Override
 	protected String tableName() {
@@ -143,5 +106,24 @@ public class EnumDictionaryRepository extends RepositoryBase {
 	protected String selectAllSql() {
 		return "SELECT * FROM enumDictionary";
 	}
-	
+
+	@Override
+	protected void setupInsert(EnumDictionary entity) throws SQLException {
+		insert.setLong(1,  entity.getIntKey());
+		insert.setString(2,  entity.getStringKey());
+		insert.setString(3, entity.getValue());
+		insert.setString(4, entity.getEnumName());		
+	}
+
+	@Override
+	protected void setupUpdate(EnumDictionary entity) throws SQLException {
+		update.setLong(1, entity.getIntKey());
+		update.setString(2,  entity.getStringKey());
+		update.setString(3, entity.getValue());
+		update.setString(4, entity.getEnumName());		
+	}
+
+
 }
+	
+
