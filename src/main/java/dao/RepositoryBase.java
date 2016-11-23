@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import domain.model.IHaveId;
 import domain.model.Person;
+import domain.model.HistoryLog;
 
 public abstract class RepositoryBase<TEntity extends IHaveId> {
 

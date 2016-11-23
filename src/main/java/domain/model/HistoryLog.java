@@ -3,7 +3,7 @@ package domain.model;
 import java.util.Date;
 
 
-public class HistoryLog {
+public class HistoryLog implements IHaveId{
 
 	private int id;
 	private Account account;
