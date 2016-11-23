@@ -3,7 +3,7 @@ package domain.model;
 import java.util.List;
 
 
-public class Person {
+public class Person implements IHaveId{
 
 	private int id;
 	private String name;

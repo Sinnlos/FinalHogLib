@@ -10,7 +10,7 @@ import java.util.List;
 
 import domain.model.Person;
 
-public class PersonRepository extends RepositoryBase {
+public class PersonRepository extends RepositoryBase<Person> {
 	
 	public PersonRepository(Connection connection) {
 		super(connection);
@@ -54,45 +54,8 @@ public class PersonRepository extends RepositoryBase {
 		return null;
 	}
 	
-	public void delete(Person p){
-		try{
-			delete.setInt(1, p.getId());
-			delete.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
-	
-	public void add(Person p){
-		try{
-			
-			insert.setString(1, p.getName());
-			insert.setString(2, p.getSurname());
-			insert.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		
-	}
-	
-	public void update(Person p){
-		try{
-			
-			update.setString(1, p.getName());
-			update.setString(2, p.getSurname());
-			update.setInt(3, p.getId());
-			update.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		
-	}
-
 	@Override
 	protected String tableName() {
-		// TODO Auto-generated method stub
 		return "person";
 	}
 
@@ -128,6 +91,21 @@ public class PersonRepository extends RepositoryBase {
 	@Override
 	protected String selectAllSql() {
 		return "SELECT * FROM person";
+	}
+
+	@Override
+	protected void setupInsert(Person entity) throws SQLException {
+		insert.setString(1, entity.getName());
+		insert.setString(2, entity.getSurname());
+		
+	}
+
+	@Override
+	protected void setupUpdate(Person entity) throws SQLException {
+		update.setString(1, entity.getName());
+		update.setString(2, entity.getSurname());
+		update.setInt(3, entity.getId());
+		
 	}
 	
 	
