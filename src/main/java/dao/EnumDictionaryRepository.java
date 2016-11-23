@@ -16,14 +16,7 @@ public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 		super(connection);
 	}
 	
-	public void delete(EnumDictionary ed){
-		try{
-			delete.setInt(1, ed.getId());
-			delete.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
+	
 	
 	public EnumDictionary get(int enumDictionaryId){
 		try{
