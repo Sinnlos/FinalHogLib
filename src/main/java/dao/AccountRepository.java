@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.model.Account;
+import domain.model.IHaveId;
 import domain.model.Person;
 
-public class AccountRepository extends RepositoryBase {
+public abstract class AccountRepository extends RepositoryBase {
 	
 public AccountRepository(Connection connection) {
 	super(connection);
@@ -129,4 +130,19 @@ public AccountRepository(Connection connection) {
 		return "SELECT * FROM account";
 	}
 	
+	@Override
+	protected void setupInsert(Account entity) throws SQLException {
+		insert.setDouble(1, entity.getAmount());
+		insert.setString(2, entity.getCurrency());
+		update.setInt(3, entity.getPersonId());
+		
+	}
+
+	@Override
+	protected void setupUpdate(Account entity) throws SQLException {
+		update.setDouble(1, entity.getAmount());
+		update.setString(2, entity.getCurrency());
+		update.setInt(3, entity.getPersonId());
+
+}
 }
