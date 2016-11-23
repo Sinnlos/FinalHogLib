@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.model.HistoryLog;
-import domain.model.Person;
 
-public class HistoryLogRepository extends RepositoryBase {
+public class HistoryLogRepository extends RepositoryBase<HistoryLog> {
 	
 	public HistoryLogRepository(Connection connection) {
 		super(connection);
@@ -63,43 +62,8 @@ public class HistoryLogRepository extends RepositoryBase {
 		}
 	}
 	
-	public void add(HistoryLog p){
-		try{
-			
-			insert.setString(1, p.getDate().toString());
-			insert.setDouble(2, p.getAmount());
-			insert.setInt(3, p.getFrom().getId());
-			insert.setInt(4, p.getTo().getId());
-			insert.setDouble(5, p.getRate());
-			insert.setInt(6, p.getType().ordinal());
-			insert.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		
-	}
-	
-	public void update(HistoryLog p){
-		try{
-			
-			update.setString(1, p.getDate().toString());
-			update.setDouble(2, p.getAmount());
-			update.setInt(3, p.getFrom().getId());
-			update.setInt(4, p.getTo().getId());
-			update.setDouble(5, p.getRate());
-			update.setInt(6, p.getType().ordinal());
-			update.executeUpdate();
-			
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-		
-	}
-	
 	@Override
 	protected String tableName() {
-		// TODO Auto-generated method stub
 		return "historyLog";
 	}
 
@@ -139,6 +103,28 @@ public class HistoryLogRepository extends RepositoryBase {
 	@Override
 	protected String selectAllSql() {
 		return "SELECT * FROM historyLog";
+	}
+
+	@Override
+	protected void setupInsert(HistoryLog entity) throws SQLException {
+		insert.setString(1, entity.getDate().toString());
+		insert.setDouble(2, entity.getAmount());
+		insert.setInt(3, entity.getFrom().getId());
+		insert.setInt(4, entity.getTo().getId());
+		insert.setDouble(5, entity.getRate());
+		insert.setInt(6, entity.getType().ordinal());
+		
+	}
+
+	@Override
+	protected void setupUpdate(HistoryLog entity) throws SQLException {
+		update.setString(1, entity.getDate().toString());
+		update.setDouble(2, entity.getAmount());
+		update.setInt(3, entity.getFrom().getId());
+		update.setInt(4, entity.getTo().getId());
+		update.setDouble(5, entity.getRate());
+		update.setInt(6, entity.getType().ordinal());
+		
 	}
 	
 }
