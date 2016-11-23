@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import domain.model.Account;
+import dao.mappers.IMapResultSetIntoEntity;
 import domain.model.IHaveId;
-import domain.model.Person;
-import domain.model.HistoryLog;
 
 public abstract class RepositoryBase<TEntity extends IHaveId> {
 
@@ -24,10 +24,12 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 	protected PreparedStatement selectById;
 	protected PreparedStatement selectAll;
 	
+	protected IMapResultSetIntoEntity<TEntity> mapper;
 
-	protected RepositoryBase(Connection connection) {
+	protected RepositoryBase(Connection connection, 
+			IMapResultSetIntoEntity<TEntity> mapper) {
 		this.connection = connection;
-		
+		this.mapper = mapper;
 		try {
 			createTable = connection.createStatement();
 			createTableIfNotExists();
@@ -42,7 +44,35 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 			e.printStackTrace();
 		}
 	}
+	public TEntity get(int personId){
+		try{
+			
+			selectById.setInt(1, personId);
+			ResultSet rs = selectById.executeQuery();
+			while(rs.next()){
+				return mapper.map(rs);
+			}
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
+	public List<TEntity> getAll(){
+		try{
+			List<TEntity> result = new ArrayList<TEntity>();
+			ResultSet rs = selectAll.executeQuery();
+			while(rs.next()){
+				result.add(mapper.map(rs));
+			}
+			return result;
+		}
+		catch(SQLException ex){
+			ex.printStackTrace();
+		}
+		return null;
+	}
 
 	public void add(TEntity entity){
 		try{
@@ -88,13 +118,27 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 	}
 	
 
+	protected String deleteSql() {
+		return "DELETE FROM "
+				+ tableName()
+				+ " WHERE id = ?";
+	}
+	
+
+	protected String selectByIdSql() {
+		return "SELECT * FROM "
+				+ tableName()
+				+ " WHERE id=?";
+	}
+
+	protected String selectAllSql() {
+		return "SELECT * FROM " + tableName();
+	}
+
 	protected abstract void setupInsert(TEntity entity) throws SQLException;
 	protected abstract void setupUpdate(TEntity entity) throws SQLException;
 	protected abstract String tableName();
 	protected abstract String createTableSql();
 	protected abstract String insertSql();
-	protected abstract String deleteSql();
 	protected abstract String updateSql();
-	protected abstract String selectByIdSql();
-	protected abstract String selectAllSql();
 }
