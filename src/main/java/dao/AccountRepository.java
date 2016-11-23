@@ -1,18 +1,14 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.model.Account;
-import domain.model.IHaveId;
-import domain.model.Person;
 
-public abstract class AccountRepository extends RepositoryBase {
+public abstract class AccountRepository extends RepositoryBase<Account> {
 	
 public AccountRepository(Connection connection) {
 	super(connection);
@@ -59,36 +55,6 @@ public AccountRepository(Connection connection) {
 		return null;
 	}
 	
-	public void delete(Account a){
-		try{
-			delete.setInt(1, a.getId());
-			delete.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
-	
-	public void add(Account a){
-		try{
-			insert.setString(1, a.getCurrency());
-			insert.setDouble(2, a.getAmount());
-			insert.setInt(3, a.getPersonId());
-			insert.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
-	
-	public void update(Account a){
-		try{
-			update.setString(1, a.getCurrency());
-			update.setDouble(2, a.getAmount());
-			update.setInt(3, a.getPersonId());
-			update.executeUpdate();
-		}catch(SQLException ex){
-			ex.printStackTrace();
-		}
-	}
 	@Override
 	protected String tableName() {
 		// TODO Auto-generated method stub

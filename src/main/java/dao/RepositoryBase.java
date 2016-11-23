@@ -97,6 +97,4 @@ public abstract class RepositoryBase<TEntity extends IHaveId> {
 	protected abstract String updateSql();
 	protected abstract String selectByIdSql();
 	protected abstract String selectAllSql();
-	protected abstract void setupUpdate(Account entity) throws SQLException;
-	protected abstract void setupInsert(Account entity) throws SQLException;
 }
