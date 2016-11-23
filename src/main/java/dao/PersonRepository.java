@@ -10,7 +10,7 @@ import java.util.List;
 
 import domain.model.Person;
 
-public class PersonRepository extends RepositoryBase<Person> {
+public abstract class PersonRepository extends RepositoryBase<Person> {
 	
 	public PersonRepository(Connection connection) {
 		super(connection);
@@ -107,14 +107,6 @@ public class PersonRepository extends RepositoryBase<Person> {
 		update.setInt(3, entity.getId());
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
