@@ -2,14 +2,20 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.Person;
 
-public class PersonRepository extends RepositoryBase<Person> {
+public class PersonRepository 
+	extends RepositoryBase<Person> 
+	implements IPersonRepository{
 	
-	public PersonRepository(Connection connection, IMapResultSetIntoEntity<Person> mapper) {
-		super(connection, mapper);
+	public PersonRepository(Connection connection, 
+			IMapResultSetIntoEntity<Person> mapper,
+			IUnitOfWork uow) {
+		super(connection, mapper,uow);
 	}
 
 	@Override
@@ -50,6 +56,11 @@ public class PersonRepository extends RepositoryBase<Person> {
 		update.setString(2, entity.getSurname());
 		update.setInt(3, entity.getId());
 		
+	}
+
+	public List<Person> withName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

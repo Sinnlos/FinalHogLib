@@ -2,16 +2,21 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import domain.model.EnumDictionary;
 
-public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
+public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary>
+	implements IEnumRepository{
 
 	
 	
-	public EnumDictionaryRepository(Connection connection, IMapResultSetIntoEntity<EnumDictionary> mapper) {
-		super(connection, mapper);
+	public EnumDictionaryRepository(Connection connection, 
+			IMapResultSetIntoEntity<EnumDictionary> mapper,
+			IUnitOfWork uow) {
+		super(connection, mapper, uow);
 	}
 	
 	
@@ -59,6 +64,13 @@ public  class EnumDictionaryRepository extends RepositoryBase<EnumDictionary> {
 		update.setString(2,  entity.getStringKey());
 		update.setString(3, entity.getValue());
 		update.setString(4, entity.getEnumName());		
+	}
+
+
+
+	public List<EnumDictionary> byEnumerationName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

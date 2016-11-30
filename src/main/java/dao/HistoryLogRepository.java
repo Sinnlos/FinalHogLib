@@ -9,12 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
+import domain.model.Account;
 import domain.model.HistoryLog;
 
-public class HistoryLogRepository extends RepositoryBase<HistoryLog> {
+public class HistoryLogRepository extends RepositoryBase<HistoryLog> 
+	implements IHistoryRepository {
 	
-	public HistoryLogRepository(Connection connection, IMapResultSetIntoEntity<HistoryLog> mapper) {
-		super(connection, mapper);
+	public HistoryLogRepository(Connection connection, 
+			IMapResultSetIntoEntity<HistoryLog> mapper,
+			IUnitOfWork uow) {
+		super(connection, mapper,uow);
 	}
 	
 	
@@ -81,6 +86,12 @@ public class HistoryLogRepository extends RepositoryBase<HistoryLog> {
 		update.setDouble(5, entity.getRate());
 		update.setInt(6, entity.getType().ordinal());
 		
+	}
+
+
+	public List<HistoryLog> byAccount(Account account) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

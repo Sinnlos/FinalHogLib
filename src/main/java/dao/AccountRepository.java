@@ -2,17 +2,20 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.AccountMapper;
+import dao.uow.IUnitOfWork;
 import domain.model.Account;
 import domain.model.Person;
 
-public class AccountRepository extends RepositoryBase<Account> {
+public class AccountRepository extends RepositoryBase<Account>
+	implements IAccountRepository{
 	
 	public AccountRepository(Connection connection, 
 			AccountMapper mapper,
-			IRepository<Person> personRepo) {
-		super(connection, mapper);
+			IRepository<Person> personRepo,IUnitOfWork uow) {
+		super(connection, mapper,uow);
 		mapper.setPersonRepo(personRepo);	
 	}
 	
@@ -72,4 +75,9 @@ public class AccountRepository extends RepositoryBase<Account> {
 		update.setInt(3, entity.getPersonId());
 
 }
+
+	public List<Account> byPerson(Person person) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

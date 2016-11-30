@@ -3,16 +3,20 @@ package domain;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.AccountRepository;
 import dao.EnumDictionaryRepository;
+import dao.IRepositoryCatalog;
 import dao.PersonRepository;
 import dao.HistoryLogRepository;
+import dao.RepositoryCatalog;
 import dao.mappers.AccountMapper;
 import dao.mappers.EnumDirectoryMapper;
 import dao.mappers.HistoryLogMapper;
 import dao.mappers.IMapResultSetIntoEntity;
 import dao.mappers.PersonMapper;
+import dao.uow.UnitOfWork;
 import domain.model.Account;
 import domain.model.EnumDictionary;
 import domain.model.HistoryLog;
@@ -25,22 +29,19 @@ public class App
     	String url = "jdbc:hsqldb:hsql://localhost/workdb";
     	try {
 			Connection connection = DriverManager.getConnection(url);
-			IMapResultSetIntoEntity<Person> personMapper = new PersonMapper();
-			IMapResultSetIntoEntity<HistoryLog> historyMapper = new HistoryLogMapper();
-			IMapResultSetIntoEntity<EnumDictionary> enumsMapper = new EnumDirectoryMapper();
-			IMapResultSetIntoEntity<Account> accountMapper = new AccountMapper();
-			
-			PersonRepository repo = new PersonRepository(connection, personMapper);
-			HistoryLogRepository repo1 = new HistoryLogRepository(connection, historyMapper);
-			AccountRepository accountRepo = new AccountRepository(connection,accountMapper);
-			EnumDictionaryRepository enumRepo = new EnumDictionaryRepository(connection,enumsMapper);
+			IRepositoryCatalog catalog = new RepositoryCatalog(new UnitOfWork(connection), connection);
 			
 			Person janek = new Person();
 			janek.setName("Jan");
 			janek.setSurname("Kowalski");
-
+			
+			catalog.people().add(janek);
+			
+			List<Person> janki = catalog.people().withName("janek");
+			
 	        System.out.println( "zapisuje janka" );
-			repo.add(janek);
+			
+	        catalog.saveAndClose();
 			
 
 		} catch (SQLException e) {
