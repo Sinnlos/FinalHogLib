@@ -20,9 +20,11 @@ public class TestServlet extends HttpServlet{
 		response.setContentType("text/html");
 		
 		String name = request.getParameter("name");
+		String surname = request.getParameter("surname");
 		PrintWriter out = response.getWriter();
-		out.println("<h1>Hello "
-				+ name
+		out.println("<h1>Imię to: "
+				+ name + ", a nazwisko to"
+				+ surname 
 				+ "</h1>");
 		out.close();
 	}
