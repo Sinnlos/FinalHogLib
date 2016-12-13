@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-import domain.model.IHaveId;
+import HogwartLibrary.IHaveId;
 
 public interface IRepository<TEntity extends IHaveId> {
 

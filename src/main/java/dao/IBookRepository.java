@@ -5,15 +5,14 @@
  */
 package dao;
 
-import HogwartLibrary.History;
-
 import java.util.List;
 
+import HogwartLibrary.Book;
 /**
  * Created by Lenovo on 12.12.2016.
  */
-public interface IHistoryRepository extends IRepository<History>{
+public interface IBookRepository extends IRepository<Book> {
 
-    public List<History> withUser(String user);
-    public List<History> withBook(String book);
+    public List<Book> withAuthor(String author);
+    public List<Book> withHistory(String history);
 }

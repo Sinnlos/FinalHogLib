@@ -3,10 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import dao.mappers.AccountMapper;
-import dao.mappers.EnumDirectoryMapper;
-import dao.mappers.HistoryLogMapper;
-import dao.mappers.PersonMapper;
+import dao.mappers.InstanceBookMapper;
+import dao.mappers.AuthorMapper;
+import dao.mappers.HistoryMapper;
+import dao.mappers.UserMapper;
+import dao.mappers.BookMapper;
 import dao.uow.IUnitOfWork;
 
 public class RepositoryCatalog implements IRepositoryCatalog{
@@ -22,21 +23,29 @@ public class RepositoryCatalog implements IRepositoryCatalog{
 	}
 
 	
-	public IPersonRepository people() {
-		return new PersonRepository(connection, new PersonMapper(), uow);
+	public IUserRepository users() {
+		return new UserRepository(connection, new UserMapper(), uow);
 	}
 
-	public IAccountRepository accounts() {
-		return new AccountRepository(connection, new AccountMapper(), people(), uow);
+	public IAuthorRepository authors() {
+		return new AuthorRepository(connection, new AuthorMapper(), uow);
 	}
 
-	public IEnumRepository dictionaries() {
-		return new EnumDictionaryRepository(connection, new EnumDirectoryMapper(), uow);
+	public IHistoryRepository histories() {
+		return new HistoryRepository(connection, new HistoryMapper(), uow);
 	}
 
-	public IHistoryRepository history() {
-		return new HistoryLogRepository(connection, new HistoryLogMapper(), uow);
-	}
+        public IBookRepository books() {
+
+                 return new BookRepository(connection, new BookMapper(), uow);
+
+    }
+        
+        public IInstanceBookRepository instancebooks() {
+
+                 return new InstaceBookRepository(connection, new InstanceBookMapper(), uow);
+
+    }
 
 	public void saveAndClose() {
 		try{

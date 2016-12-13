@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dao.IRepository;
-import domain.model.IHaveId;
+import HogwartLibrary.IHaveId;
 
 public interface IMapResultSetIntoEntity<TEntity extends IHaveId> {
 
